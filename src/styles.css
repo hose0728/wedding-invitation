@@ -9,6 +9,7 @@ body {
   background: #fff;
   min-height: 100vh;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  position: relative;
 }
 
 @media (max-width: 430px) {
@@ -20,20 +21,5 @@ body {
   }
   body {
     background: #fff;
-  }
-}
-
-.wedding-card {
-  max-width: 430px; /* 모바일 카드 최대 폭 */
-  margin: 0 auto;
-  background: white;
-  min-height: 100vh;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 선택사항: 그림자 */
-  width: 100%;
-  @media (min-width: 768px) {
-    .wedding-card {
-      width: 430px; /* 카드 폭 고정 */
-      border-radius: 8px; /* 선택사항: 테두리 둥글게 */
-    }
   }
 }

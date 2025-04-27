@@ -5,10 +5,12 @@ import LocationMap from "./components/LocationMap";
 import Account from "./components/Account";
 import RSVP from "./components/RSVP";
 import Footer from "./components/Footer";
+import MusicPlayer from "./components/MusicPlayer";
 
 function App() {
   return (
     <div className="app-container">
+      <MusicPlayer />
       <IntroSection />
       <WeddingInfo />
       <Gallery />
