@@ -5,7 +5,7 @@ const rotate = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-const MusicButton = styled.button<{ playing: boolean }>`
+const MusicButton = styled.button<{ $playing: boolean }>`
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -21,16 +21,16 @@ const MusicButton = styled.button<{ playing: boolean }>`
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   }
   svg {
-    ${({ playing }) =>
-      playing &&
+    ${({ $playing }) =>
+      $playing &&
       css`
         animation: ${rotate} 1.2s linear infinite;
       `}
   }
 `;
 
-const FadeImage = styled.img<{ visible: boolean }>`
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+const FadeImage = styled.img<{ $visible: boolean }>`
+  opacity: ${(props) => (props.$visible ? 1 : 0)};
   transition: opacity 0.4s;
   position: absolute;
   top: 0;
@@ -56,12 +56,13 @@ function MusicPlayer() {
         ref={audioRef}
         src="/backGround.mp3"
         loop
+        autoPlay
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
       <MusicButton
         onClick={handleToggle}
-        playing={playing}
+        $playing={playing}
         aria-label={playing ? "일시정지" : "재생"}
         style={{ position: "relative", width: 24, height: 24 }}
       >
@@ -70,7 +71,7 @@ function MusicPlayer() {
           alt="재생"
           width={24}
           height={24}
-          visible={!playing}
+          $visible={!playing}
           style={{ pointerEvents: "none" }}
         />
         <FadeImage
@@ -78,7 +79,7 @@ function MusicPlayer() {
           alt="일시정지"
           width={24}
           height={24}
-          visible={playing}
+          $visible={playing}
           style={{ pointerEvents: "none" }}
         />
       </MusicButton>
