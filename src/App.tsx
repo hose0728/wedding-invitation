@@ -6,7 +6,6 @@ import Account from "./components/Account";
 import RSVP from "./components/RSVP";
 import Footer from "./components/Footer";
 import MusicPlayer from "./components/MusicPlayer";
-import WelcomeOverlay from "./components/WelcomeOverlay";
 
 function App() {
   return (
