@@ -232,7 +232,7 @@ function IntroSection() {
       </PhotoContainer>
 
       <DateSection>
-        <MainDate>2025. 11. 16.</MainDate>
+        <MainDate>2025. 11. 16. (일)</MainDate>
         <TimeInfo>오후 1시 30분</TimeInfo>
         <Divider />
         <VenueInfo>수원시 팔달구 노블레스웨딩컨벤션</VenueInfo>
