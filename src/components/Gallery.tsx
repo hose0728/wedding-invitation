@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const GalleryContainer = styled.div`
-  background: #fafafa;
+  background: #fff;
   padding: 60px 20px;
 `;
 

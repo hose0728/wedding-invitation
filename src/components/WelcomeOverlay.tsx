@@ -1,11 +1,5 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-
-// fade-out 애니메이션 정의
-const fadeOut = keyframes`
-  from { opacity: 1; }
-  to { opacity: 0; }
-`;
 
 // 반짝이는 애니메이션
 const sparkle = keyframes`
@@ -30,13 +24,8 @@ const Overlay = styled.div<{ $fade: boolean }>`
   text-align: center;
   padding: 2rem;
   transition: opacity 0.8s;
-  opacity: 1;
-  ${({ $fade }) =>
-    $fade &&
-    `
-    animation: ${fadeOut} 1.2s forwards;
-    pointer-events: none;
-  `}
+  opacity: ${({ $fade }) => ($fade ? 0 : 1)};
+  visibility: ${({ $fade }) => ($fade ? "hidden" : "visible")};
 `;
 
 const WelcomeContent = styled.div`
@@ -81,30 +70,30 @@ const Dot = styled.div<{ $delay: number }>`
 `;
 
 function WelcomeOverlay() {
+  const [show, setShow] = useState(true);
   const [fade, setFade] = useState(false);
-  const [hide, setHide] = useState(false);
-  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 2초 후 fade-out 시작
-    const timer = setTimeout(() => setFade(true), 2000);
-    return () => clearTimeout(timer);
+    // 1.5초 후 fade-out 시작
+    const fadeTimer = setTimeout(() => {
+      setFade(true);
+    }, 1500);
+
+    // 2.5초 후 완전히 숨김
+    const hideTimer = setTimeout(() => {
+      setShow(false);
+    }, 2500);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(hideTimer);
+    };
   }, []);
 
-  useEffect(() => {
-    if (!fade) return;
-    const handleAnimationEnd = () => setHide(true);
-    const node = overlayRef.current;
-    if (node) node.addEventListener("animationend", handleAnimationEnd);
-    return () => {
-      if (node) node.removeEventListener("animationend", handleAnimationEnd);
-    };
-  }, [fade]);
-
-  if (hide) return null;
+  if (!show) return null;
 
   return (
-    <Overlay ref={overlayRef} $fade={fade}>
+    <Overlay $fade={fade}>
       <WelcomeContent>
         <WelcomeEmoji>💒</WelcomeEmoji>
         <WelcomeTitle>결혼식에 초대합니다</WelcomeTitle>

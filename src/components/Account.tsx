@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const AccountContainer = styled.div`
-  background: #fafafa;
+  background: #fff;
   padding: 60px 20px;
 `;
 
@@ -152,7 +152,7 @@ function Account() {
             <GroupTitle>Groom</GroupTitle>
 
             <AccountItem>
-              <AccountOwner>신랑 호세</AccountOwner>
+              <AccountOwner>신랑 주호세</AccountOwner>
               <BankInfo>국민은행</BankInfo>
               <AccountNumber>123456-78-901234</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("12345678901234")}>

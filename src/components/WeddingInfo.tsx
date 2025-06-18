@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const WeddingInfoContainer = styled.div`
-  background: #ffffff;
+  background: #fff;
   padding: 60px 20px;
   text-align: center;
 `;
@@ -110,19 +110,19 @@ function WeddingInfo() {
           <ParentGroup>
             <ParentLabel>Groom</ParentLabel>
             <ParentNames>
-              <ParentName>아버지 김○○</ParentName>
-              <ParentName>어머니 이○○</ParentName>
+              <ParentName>아버지 주헌백</ParentName>
+              <ParentName>어머니 김화영</ParentName>
             </ParentNames>
-            <ChildName>장남 호세</ChildName>
+            <ChildName>장남 주호세</ChildName>
           </ParentGroup>
 
           <ParentGroup>
             <ParentLabel>Bride</ParentLabel>
             <ParentNames>
-              <ParentName>아버지 박○○</ParentName>
-              <ParentName>어머니 최○○</ParentName>
+              <ParentName>아버지 임유순</ParentName>
+              <ParentName>어머니 이제복</ParentName>
             </ParentNames>
-            <ChildName>장녀 혜빈</ChildName>
+            <ChildName>장녀 임혜빈</ChildName>
           </ParentGroup>
         </ParentsInfo>
       </ContentWrapper>

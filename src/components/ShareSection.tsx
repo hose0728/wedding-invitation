@@ -4,7 +4,7 @@ import { useState } from "react";
 const ShareContainer = styled.div`
   padding: 3rem 2rem;
   text-align: center;
-  background: #f8f9fb;
+  background: #fff;
   border-top: 1px solid #f0f0f0;
 `;
 

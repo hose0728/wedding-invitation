@@ -2,174 +2,186 @@ import styled from "styled-components";
 
 const IntroContainer = styled.div`
   position: relative;
-  height: 100vh;
-  background: #ffffff;
+  min-height: 100vh;
+  background: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 40px 20px;
+  padding: 2rem 1.5rem 3rem;
   overflow: hidden;
 `;
 
-const BackgroundDecoration = styled.div`
+const NamesSection = styled.div`
+  margin-bottom: 2rem;
+  z-index: 2;
+`;
+
+const NameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`;
+
+const GroomBride = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const Label = styled.span`
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 400;
+  font-family: "Arial", sans-serif;
+`;
+
+const Name = styled.span`
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #333;
+  font-family: "Georgia", serif;
+`;
+
+const And = styled.span`
+  font-size: 2rem;
+  color: #999;
+  font-weight: 300;
+  font-style: italic;
+  font-family: "Georgia", serif;
+  margin: 0 0.5rem;
+`;
+
+const PhotoContainer = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 2rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+`;
+
+const CouplePhoto = styled.div`
+  width: 100%;
+  height: 450px;
+  background: #f0f0f0;
+  background-image: url("/couple-main.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+
+  /* 사진이 없을 때 플레이스홀더 */
+  &::before {
+    content: "📸";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.3;
+  }
+
+  &::after {
+    content: "커플 사진을 추가해주세요";
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    font-size: 1rem;
+    color: #999;
+    font-family: "Arial", sans-serif;
+  }
+`;
+
+const FloatingPetals = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(248, 249, 250, 0.8) 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
+  pointer-events: none;
   z-index: 1;
 
-  &::before {
-    content: "";
+  &::before,
+  &::after {
+    content: "🌸";
     position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  &::before {
     top: 20%;
     left: 10%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(
-      circle,
-      rgba(245, 245, 245, 0.3) 0%,
-      transparent 70%
-    );
-    border-radius: 50%;
+    animation-delay: 0s;
   }
 
   &::after {
-    content: "";
-    position: absolute;
-    bottom: 20%;
-    right: 10%;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(
-      circle,
-      rgba(250, 250, 250, 0.4) 0%,
-      transparent 70%
-    );
-    border-radius: 50%;
+    top: 60%;
+    right: 15%;
+    animation-delay: 3s;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(10deg);
+    }
   }
 `;
 
-const ContentWrapper = styled.div`
-  position: relative;
-  z-index: 2;
-  max-width: 320px;
-  width: 100%;
-`;
-
-const WeddingLabel = styled.div`
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: #999999;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  font-family: "Arial", sans-serif;
-`;
-
-const CoupleNames = styled.div`
-  margin: 3rem 0;
-`;
-
-const NamesContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
+const DateSection = styled.div`
   margin: 2rem 0;
-`;
-
-const Name = styled.span`
-  font-size: 2.2rem;
-  font-weight: 300;
-  color: #333333;
-  font-family: "Georgia", serif;
-
-  @media (max-width: 430px) {
-    font-size: 1.8rem;
-  }
-`;
-
-const Ampersand = styled.span`
-  font-size: 1.5rem;
-  color: #cccccc;
-  font-weight: 300;
-  font-style: italic;
-  font-family: "Georgia", serif;
-`;
-
-const WeddingDate = styled.div`
-  margin: 4rem 0;
-`;
-
-const DateContainer = styled.div`
-  border: 1px solid #eeeeee;
-  padding: 2rem 1.5rem;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
+  z-index: 2;
 `;
 
 const MainDate = styled.div`
-  font-size: 1.1rem;
-  color: #666666;
+  font-size: 1.4rem;
+  color: #333;
   font-weight: 400;
   margin-bottom: 0.5rem;
   font-family: "Arial", sans-serif;
 `;
 
-const DateNumbers = styled.div`
-  font-size: 2rem;
-  color: #333333;
-  font-weight: 300;
-  margin: 1rem 0;
-  font-family: "Georgia", serif;
-
-  @media (max-width: 430px) {
-    font-size: 1.6rem;
-  }
+const TimeInfo = styled.div`
+  font-size: 1.1rem;
+  color: #666;
+  font-family: "Arial", sans-serif;
+  margin-bottom: 1.5rem;
 `;
 
-const TimeAndVenue = styled.div`
-  font-size: 0.9rem;
-  color: #888888;
-  line-height: 1.6;
-  margin-top: 1rem;
+const VenueInfo = styled.div`
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
   font-family: "Arial", sans-serif;
 `;
 
 const Divider = styled.div`
-  width: 40px;
+  width: 50px;
   height: 1px;
-  background: #dddddd;
-  margin: 3rem auto;
-`;
-
-const InvitationMessage = styled.div`
-  font-size: 0.85rem;
-  color: #777777;
-  line-height: 1.8;
-  font-weight: 300;
-  font-family: "Arial", sans-serif;
-  max-width: 280px;
-  margin: 0 auto;
+  background: #ddd;
+  margin: 2rem auto;
 `;
 
 const ScrollHint = styled.div`
   position: absolute;
-  bottom: 40px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #cccccc;
+  color: #ccc;
   font-size: 0.7rem;
   z-index: 2;
   font-family: "Arial", sans-serif;
@@ -178,18 +190,20 @@ const ScrollHint = styled.div`
 const ScrollDot = styled.div`
   width: 4px;
   height: 4px;
-  background: #dddddd;
+  background: #ddd;
   border-radius: 50%;
   margin-top: 8px;
-  animation: fadeInOut 2s infinite;
+  animation: bounce 2s infinite;
 
-  @keyframes fadeInOut {
+  @keyframes bounce {
     0%,
     100% {
       opacity: 0.3;
+      transform: translateY(0);
     }
     50% {
       opacity: 1;
+      transform: translateY(-5px);
     }
   }
 `;
@@ -197,39 +211,32 @@ const ScrollDot = styled.div`
 function IntroSection() {
   return (
     <IntroContainer>
-      <BackgroundDecoration />
+      <FloatingPetals />
 
-      <ContentWrapper>
-        <WeddingLabel>Wedding Invitation</WeddingLabel>
+      <NamesSection>
+        <NameContainer>
+          <GroomBride>
+            <Label>신랑</Label>
+            <Name>주호세</Name>
+          </GroomBride>
+          <And>and</And>
+          <GroomBride>
+            <Label>신부</Label>
+            <Name>임혜빈</Name>
+          </GroomBride>
+        </NameContainer>
+      </NamesSection>
 
-        <CoupleNames>
-          <NamesContainer>
-            <Name>호세</Name>
-            <Ampersand>&</Ampersand>
-            <Name>혜빈</Name>
-          </NamesContainer>
-        </CoupleNames>
+      <PhotoContainer>
+        <CouplePhoto />
+      </PhotoContainer>
 
-        <WeddingDate>
-          <DateContainer>
-            <MainDate>2025년 11월 16일 일요일</MainDate>
-            <DateNumbers>11.16</DateNumbers>
-            <TimeAndVenue>
-              오후 1시 30분
-              <br />
-              수원시 팔달구 노블레스웨딩컨벤션
-            </TimeAndVenue>
-          </DateContainer>
-        </WeddingDate>
-
+      <DateSection>
+        <MainDate>2025. 11. 16.</MainDate>
+        <TimeInfo>오후 1시 30분</TimeInfo>
         <Divider />
-
-        <InvitationMessage>
-          두 사람이 사랑으로 하나가 되는
-          <br />
-          소중한 순간에 함께해 주세요
-        </InvitationMessage>
-      </ContentWrapper>
+        <VenueInfo>수원시 팔달구 노블레스웨딩컨벤션</VenueInfo>
+      </DateSection>
 
       <ScrollHint>
         <span>SCROLL</span>

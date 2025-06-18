@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const LocationContainer = styled.div`
-  background: #ffffff;
+  background: #fff;
   padding: 60px 20px;
 `;
 

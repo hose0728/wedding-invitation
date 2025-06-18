@@ -6,20 +6,32 @@ const rotate = keyframes`
 `;
 
 const MusicButton = styled.button<{ $playing: boolean }>`
-  width: 10px;
-  height: 10px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #fff;
-  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(200, 180, 150, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: black;
-  transition: box-shadow 0.2s;
-  &:active {
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  color: #8b7355;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(139, 115, 85, 0.15);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(200, 180, 150, 0.5);
+    box-shadow: 0 6px 20px rgba(139, 115, 85, 0.2);
+    transform: translateY(-1px);
   }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(139, 115, 85, 0.2);
+  }
+
   svg {
     ${({ $playing }) =>
       $playing &&
@@ -33,8 +45,17 @@ const FadeImage = styled.img<{ $visible: boolean }>`
   opacity: ${(props) => (props.$visible ? 1 : 0)};
   transition: opacity 0.4s;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: sepia(20%) saturate(80%) hue-rotate(20deg) brightness(0.8);
+`;
+
+const PlayerContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
 `;
 
 function MusicPlayer() {
@@ -51,7 +72,7 @@ function MusicPlayer() {
   };
 
   return (
-    <div style={{ position: "absolute", top: 20, right: 20, zIndex: 1000 }}>
+    <PlayerContainer>
       <audio
         ref={audioRef}
         src="/backGround.mp3"
@@ -64,26 +85,26 @@ function MusicPlayer() {
         onClick={handleToggle}
         $playing={playing}
         aria-label={playing ? "일시정지" : "재생"}
-        style={{ position: "relative", width: 24, height: 24 }}
       >
         <FadeImage
           src="/play.svg"
           alt="재생"
-          width={24}
-          height={24}
+          width={20}
+          height={20}
           $visible={!playing}
           style={{ pointerEvents: "none" }}
         />
         <FadeImage
           src="/wave.gif"
           alt="일시정지"
-          width={24}
-          height={24}
+          width={20}
+          height={20}
           $visible={playing}
           style={{ pointerEvents: "none" }}
         />
       </MusicButton>
-    </div>
+    </PlayerContainer>
   );
 }
+
 export default MusicPlayer;

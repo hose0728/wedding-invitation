@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 
 const RSVPContainer = styled.div`
-  background: #ffffff;
+  background: #fff;
   padding: 60px 20px;
 `;
 
