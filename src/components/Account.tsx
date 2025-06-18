@@ -161,7 +161,7 @@ function Account() {
             </AccountItem>
 
             <AccountItem>
-              <AccountOwner>신랑 아버지 김○○</AccountOwner>
+              <AccountOwner>신랑 아버지 주헌백</AccountOwner>
               <BankInfo>신한은행</BankInfo>
               <AccountNumber>987654-32-109876</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("98765432109876")}>
@@ -170,7 +170,7 @@ function Account() {
             </AccountItem>
 
             <AccountItem>
-              <AccountOwner>신랑 어머니 이○○</AccountOwner>
+              <AccountOwner>신랑 어머니 김화영</AccountOwner>
               <BankInfo>우리은행</BankInfo>
               <AccountNumber>555666-77-888999</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("55566677888999")}>
@@ -183,7 +183,7 @@ function Account() {
             <GroupTitle>Bride</GroupTitle>
 
             <AccountItem>
-              <AccountOwner>신부 혜빈</AccountOwner>
+              <AccountOwner>신부 임혜빈</AccountOwner>
               <BankInfo>하나은행</BankInfo>
               <AccountNumber>111222-33-444555</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("11122233444555")}>
@@ -192,7 +192,7 @@ function Account() {
             </AccountItem>
 
             <AccountItem>
-              <AccountOwner>신부 아버지 박○○</AccountOwner>
+              <AccountOwner>신부 아버지 임유순</AccountOwner>
               <BankInfo>기업은행</BankInfo>
               <AccountNumber>777888-99-000111</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("77788899000111")}>
@@ -201,7 +201,7 @@ function Account() {
             </AccountItem>
 
             <AccountItem>
-              <AccountOwner>신부 어머니 최○○</AccountOwner>
+              <AccountOwner>신부 어머니 이제복</AccountOwner>
               <BankInfo>농협은행</BankInfo>
               <AccountNumber>333444-55-666777</AccountNumber>
               <CopyButton onClick={() => copyToClipboard("33344455666777")}>
@@ -214,9 +214,9 @@ function Account() {
         <ContactInfo>
           <ContactTitle>문의사항</ContactTitle>
           <ContactDetails>
-            신랑측: 010-1234-5678 (호세)
+            신랑측: 010-4737-2086 (주호세)
             <br />
-            신부측: 010-9876-5432 (혜빈)
+            신부측: 010-5479-2292 (임혜빈)
           </ContactDetails>
         </ContactInfo>
       </ContentWrapper>
