@@ -88,7 +88,7 @@ function Footer() {
 
         <Divider />
 
-        <FloralDecoration>🌸 🌿 🌸</FloralDecoration>
+        <FloralDecoration>🤵‍♂️ 🌿 👰‍♀️</FloralDecoration>
 
         <CoupleNames>주호세 & 임혜빈</CoupleNames>
         <WeddingDate>2025. 11. 16</WeddingDate>
