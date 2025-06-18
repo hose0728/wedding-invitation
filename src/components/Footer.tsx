@@ -95,7 +95,7 @@ function Footer() {
 
         <Copyright>
           Made with<HeartIcon>♥</HeartIcon>Love
-          <br />© 2025 Jose & Hyebin Wedding
+          <br />© 2025 Jose & Hyebin
         </Copyright>
       </ContentWrapper>
     </FooterContainer>

@@ -177,7 +177,7 @@ function LocationMap() {
             <TransportDetails>
               건물 지하 주차장 이용 가능
               <br />
-              주차 요금 무료 (3시간)
+              주차 요금 무료 (2시간)
             </TransportDetails>
           </TransportSection>
         </TransportInfo>
