@@ -1,5 +1,42 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Kakao SDK 타입 선언
+declare global {
+  interface Window {
+    Kakao: {
+      init: (key: string) => void;
+      isInitialized: () => boolean;
+      Share: {
+        sendDefault: (options: {
+          objectType: string;
+          content: {
+            title: string;
+            description: string;
+            imageUrl: string;
+            link: {
+              mobileWebUrl: string;
+              webUrl: string;
+            };
+          };
+          social?: {
+            likeCount: number;
+            commentCount: number;
+            sharedCount: number;
+          };
+          buttons: Array<{
+            title: string;
+            link: {
+              mobileWebUrl: string;
+              webUrl: string;
+            };
+          }>;
+          installTalk: boolean;
+        }) => void;
+      };
+    };
+  }
+}
 
 const ShareContainer = styled.div`
   padding: 3rem 2rem;
@@ -54,6 +91,12 @@ const ShareButton = styled.button<{ $bgColor: string; $hoverColor: string }>`
   &:active {
     transform: translateY(0);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
 `;
 
 const IconWrapper = styled.span`
@@ -78,37 +121,213 @@ const CopyNotification = styled.div<{ $show: boolean }>`
 
 function ShareSection() {
   const [showCopyNotification, setShowCopyNotification] = useState(false);
+  const [kakaoReady, setKakaoReady] = useState(false);
+
+  useEffect(() => {
+    // 카카오 SDK 초기화
+    const initKakao = () => {
+      if (window.Kakao) {
+        if (!window.Kakao.isInitialized()) {
+          // 환경 변수에서 카카오 JavaScript Key 가져오기
+          // 개발 중에는 더미 키 사용 (실제 배포 시에는 환경 변수 설정 필요)
+          const kakaoKey =
+            import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY ||
+            "YOUR_JAVASCRIPT_KEY_HERE";
+
+          if (kakaoKey === "YOUR_JAVASCRIPT_KEY_HERE") {
+            console.warn(
+              "카카오 JavaScript Key가 설정되지 않았습니다. .env 파일에 VITE_KAKAO_JAVASCRIPT_KEY를 설정해주세요."
+            );
+          }
+
+          try {
+            window.Kakao.init(kakaoKey);
+            setKakaoReady(true);
+          } catch (error) {
+            console.error("카카오 SDK 초기화 실패:", error);
+          }
+        } else {
+          console.log("이미 초기화됨");
+          setKakaoReady(true);
+        }
+      } else {
+        console.log("window.Kakao가 아직 로드되지 않음");
+      }
+    };
+
+    // SDK 로드 확인
+    if (window.Kakao) {
+      initKakao();
+    } else {
+      console.log("window.Kakao 로드 대기 중...");
+      const checkKakao = setInterval(() => {
+        if (window.Kakao) {
+          initKakao();
+          clearInterval(checkKakao);
+        }
+      }, 100);
+
+      // 10초 후 타임아웃
+      const timeout = setTimeout(() => {
+        console.error("카카오 SDK 로드 타임아웃 (10초)");
+        clearInterval(checkKakao);
+      }, 10000);
+
+      return () => {
+        clearInterval(checkKakao);
+        clearTimeout(timeout);
+      };
+    }
+  }, []);
 
   const shareToKakao = () => {
-    const currentUrl = window.location.href;
-    const shareText = `💒 결혼식에 초대합니다\n\n${currentUrl}`;
+    if (!kakaoReady || !window.Kakao) {
+      alert(
+        "카카오톡 공유 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요."
+      );
+      return;
+    }
 
-    // 카카오톡 공유 (모바일에서 카카오톡 앱 실행)
-    if (
-      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    ) {
-      const kakaoUrl = `kakaotalk://share?text=${encodeURIComponent(
-        shareText
-      )}`;
-      window.location.href = kakaoUrl;
-    } else {
-      // 데스크톱에서는 클립보드에 복사
-      navigator.clipboard.writeText(shareText).then(() => {
-        setShowCopyNotification(true);
-        setTimeout(() => setShowCopyNotification(false), 2000);
+    const currentUrl = window.location.href;
+    const title =
+      import.meta.env.VITE_WEDDING_TITLE || "💒 결혼식에 초대합니다";
+    const description =
+      import.meta.env.VITE_WEDDING_DESCRIPTION ||
+      "소중한 분들과 함께 하고 싶은 저희의 결혼식에 초대합니다.";
+
+    try {
+      window.Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: title,
+          description: description,
+          imageUrl: `${window.location.origin}/couple-main.jpg`,
+          link: {
+            mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
+          },
+        },
+        social: {
+          likeCount: 0,
+          commentCount: 0,
+          sharedCount: 0,
+        },
+        buttons: [
+          {
+            title: "청첩장 보기",
+            link: {
+              mobileWebUrl: currentUrl,
+              webUrl: currentUrl,
+            },
+          },
+        ],
+        // 카카오톡이 설치되어 있지 않은 경우 설치 페이지로 이동
+        installTalk: true,
       });
+    } catch (error) {
+      console.error("카카오톡 공유 실패:", error);
+      // 오류 발생 시 URL 복사로 대체
+      copyInvitationLink();
+    }
+  };
+
+  const shareToKakaoPC = () => {
+    if (!kakaoReady || !window.Kakao) {
+      alert(
+        "카카오톡 공유 기능을 불러오는 중입니다. 잠시 후 다시 시도해주세요."
+      );
+      return;
+    }
+
+    const currentUrl = window.location.href;
+    const title =
+      import.meta.env.VITE_WEDDING_TITLE || "💒 결혼식에 초대합니다";
+    const description =
+      import.meta.env.VITE_WEDDING_DESCRIPTION ||
+      "소중한 분들과 함께 하고 싶은 저희의 결혼식에 초대합니다.";
+
+    try {
+      // PC에서는 카카오톡 공유 후 QR 코드나 링크 복사 옵션 제공
+      window.Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: title,
+          description: description,
+          imageUrl: `${window.location.origin}/couple-main.jpg`,
+          link: {
+            mobileWebUrl: currentUrl,
+            webUrl: currentUrl,
+          },
+        },
+        social: {
+          likeCount: 0,
+          commentCount: 0,
+          sharedCount: 0,
+        },
+        buttons: [
+          {
+            title: "청첩장 보기",
+            link: {
+              mobileWebUrl: currentUrl,
+              webUrl: currentUrl,
+            },
+          },
+        ],
+        installTalk: true,
+      });
+    } catch (error) {
+      console.error("카카오톡 공유 실패:", error);
+      copyInvitationLink();
     }
   };
 
   const copyInvitationLink = () => {
     const currentUrl = window.location.href;
-    navigator.clipboard.writeText(currentUrl).then(() => {
+
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(currentUrl)
+        .then(() => {
+          setShowCopyNotification(true);
+          setTimeout(() => setShowCopyNotification(false), 2000);
+        })
+        .catch(() => {
+          // 클립보드 API 실패 시 대체 방법
+          fallbackCopyTextToClipboard(currentUrl);
+        });
+    } else {
+      // 클립보드 API를 지원하지 않는 브라우저
+      fallbackCopyTextToClipboard(currentUrl);
+    }
+  };
+
+  const fallbackCopyTextToClipboard = (text: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
       setShowCopyNotification(true);
       setTimeout(() => setShowCopyNotification(false), 2000);
-    });
+    } catch (err) {
+      console.error("복사 실패:", err);
+      alert("링크 복사에 실패했습니다. 수동으로 복사해주세요: " + text);
+    }
+
+    document.body.removeChild(textArea);
   };
+
+  // 모바일 기기 감지
+  const isMobile =
+    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
 
   return (
     <>
@@ -120,7 +339,8 @@ function ShareSection() {
           <ShareButton
             $bgColor="#FEE500"
             $hoverColor="#E6CE00"
-            onClick={shareToKakao}
+            onClick={isMobile ? shareToKakao : shareToKakaoPC}
+            disabled={!kakaoReady}
             style={{ color: "#3A1D1D" }}
           >
             <IconWrapper>💬</IconWrapper>

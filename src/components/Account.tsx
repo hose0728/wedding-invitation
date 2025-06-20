@@ -171,9 +171,9 @@ function Account() {
 
             <AccountItem>
               <AccountOwner>신랑 어머니 김화영</AccountOwner>
-              <BankInfo>우리은행</BankInfo>
-              <AccountNumber>555666-77-888999</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("55566677888999")}>
+              <BankInfo>농협</BankInfo>
+              <AccountNumber>352-1268-7453-73</AccountNumber>
+              <CopyButton onClick={() => copyToClipboard("352-1268-7453-73")}>
                 계좌복사
               </CopyButton>
             </AccountItem>
