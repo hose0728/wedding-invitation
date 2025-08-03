@@ -136,6 +136,10 @@ const ActionButton = styled.button`
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 
   &:hover {
     background: #f8f9fa;
@@ -145,6 +149,18 @@ const ActionButton = styled.button`
   &:active {
     transform: translateY(1px);
   }
+`;
+
+const NaverIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+`;
+
+const CopyIcon = styled.svg`
+  width: 16px;
+  height: 16px;
+  fill: #666666;
 `;
 
 const CarInfoList = styled.div`
@@ -408,8 +424,16 @@ function LocationMap() {
         <MapContainer ref={mapRef} />
 
         <ActionButtons>
-          <ActionButton onClick={handleOpenNavigation}>길찾기</ActionButton>
-          <ActionButton onClick={handleCopyAddress}>주소복사</ActionButton>
+          <ActionButton onClick={handleOpenNavigation}>
+            <NaverIcon src="/naverMap.webp" alt="네이버 지도" />
+            네이버 지도
+          </ActionButton>
+          <ActionButton onClick={handleCopyAddress}>
+            <CopyIcon viewBox="0 0 24 24">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+            </CopyIcon>
+            주소복사
+          </ActionButton>
         </ActionButtons>
 
         <TransportInfo>
