@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect, useRef } from "react";
 
 const LocationContainer = styled.div`
   background: #fff;
@@ -48,27 +49,13 @@ const VenuePhone = styled.div`
   font-family: "Arial", sans-serif;
 `;
 
-const MapPlaceholder = styled.div`
+const MapContainer = styled.div`
   width: 100%;
   height: 200px;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   margin: 2rem 0;
-  color: #adb5bd;
-  font-size: 0.8rem;
-  font-family: "Arial", sans-serif;
-  position: relative;
-
-  &::before {
-    content: "🗺️";
-    display: block;
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const TransportInfo = styled.div`
@@ -243,7 +230,168 @@ const ShuttleInfo = styled.span`
   font-weight: 500;
 `;
 
+// 네이버 지도 타입 정의
+declare global {
+  interface Window {
+    naver: any;
+  }
+}
+
+// 환경변수 타입 정의
+interface ImportMetaEnv {
+  readonly VITE_NAVER_MAP_CLIENT_ID: string;
+  readonly VITE_KAKAO_JAVASCRIPT_KEY: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 function LocationMap() {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstance = useRef<any>(null);
+
+  useEffect(() => {
+    // 네이버 지도 API 클라이언트 ID 확인
+    const clientId = import.meta.env.VITE_NAVER_MAP_CLIENT_ID;
+
+    if (!clientId || clientId === "YOUR_CLIENT_ID") {
+      console.warn(
+        "네이버 지도 API 클라이언트 ID가 설정되지 않았습니다. .env 파일에 VITE_NAVER_MAP_CLIENT_ID를 설정해주세요."
+      );
+      return;
+    }
+
+    // 네이버 지도 API 동적 로드
+    const loadNaverMapAPI = () => {
+      return new Promise<void>((resolve, reject) => {
+        // 이미 로드된 경우
+        if (typeof window.naver !== "undefined") {
+          resolve();
+          return;
+        }
+
+        // 스크립트 태그 생성
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = `https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${clientId}`;
+
+        script.onload = () => {
+          resolve();
+        };
+
+        script.onerror = () => {
+          console.error("네이버 지도 API 로드 실패");
+          reject(new Error("네이버 지도 API 로드 실패"));
+        };
+
+        document.head.appendChild(script);
+      });
+    };
+
+    // 지도 초기화 함수
+    const initializeMap = () => {
+      try {
+        // 결혼식장 좌표 (수원 노블레스웨딩컨벤션)
+        const venueLocation = new window.naver.maps.LatLng(
+          37.281503,
+          127.030336
+        );
+
+        const mapOptions = {
+          center: venueLocation,
+          zoom: 17,
+          mapTypeControl: false,
+          scaleControl: false,
+          logoControl: false,
+          mapDataControl: false,
+          zoomControl: true,
+          zoomControlOptions: {
+            position: window.naver.maps.Position.TOP_RIGHT,
+          },
+        };
+
+        // 지도 생성
+        mapInstance.current = new window.naver.maps.Map(
+          mapRef.current,
+          mapOptions
+        );
+
+        // 마커 생성
+        const marker = new window.naver.maps.Marker({
+          position: venueLocation,
+          map: mapInstance.current,
+        });
+
+        // 정보창 생성
+        const infoWindow = new window.naver.maps.InfoWindow({
+          content: `
+            <div style="padding: 10px; min-width: 200px;">
+              <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">노블레스웨딩컨벤션</h3>
+              <p style="margin: 0; font-size: 12px; color: #666;">경기도 수원시 팔달구 팔달문로 128</p>
+              <p style="margin: 5px 0 0 0; font-size: 12px; color: #888;">5층 노블레스홀</p>
+            </div>
+          `,
+          maxWidth: 200,
+          backgroundColor: "#fff",
+          borderColor: "#ddd",
+          borderWidth: 1,
+          anchorSize: new window.naver.maps.Size(10, 10),
+          anchorColor: "#fff",
+          pixelOffset: new window.naver.maps.Point(0, -10),
+        });
+
+        // 마커 클릭 시 정보창 표시
+        window.naver.maps.Event.addListener(marker, "click", () => {
+          if (infoWindow.getMap()) {
+            infoWindow.close();
+          } else {
+            infoWindow.open(mapInstance.current, marker);
+          }
+        });
+      } catch (error) {
+        console.error("네이버 지도 초기화 실패:", error);
+      }
+    };
+
+    // API 로드 후 지도 초기화
+    loadNaverMapAPI()
+      .then(() => {
+        if (mapRef.current) {
+          initializeMap();
+        }
+      })
+      .catch((error) => {
+        console.error("네이버 지도 API 로드 실패:", error);
+      });
+  }, []);
+
+  const handleCopyAddress = () => {
+    const address = "경기도 수원시 팔달구 팔달문로 128";
+    navigator.clipboard
+      .writeText(address)
+      .then(() => {
+        alert("주소가 복사되었습니다!");
+      })
+      .catch(() => {
+        // 클립보드 API가 지원되지 않는 경우
+        const textArea = document.createElement("textarea");
+        textArea.value = address;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        alert("주소가 복사되었습니다!");
+      });
+  };
+
+  const handleOpenNavigation = () => {
+    // 네이버 지도 앱으로 길찾기
+    const address = encodeURIComponent("경기도 수원시 팔달구 팔달문로 128");
+    const url = `https://map.naver.com/p/search/${address}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <LocationContainer>
       <ContentWrapper>
@@ -259,11 +407,11 @@ function LocationMap() {
           <VenuePhone>TEL. 031-215-7000</VenuePhone>
         </VenueInfo>
 
-        <MapPlaceholder>지도가 여기에 표시됩니다</MapPlaceholder>
+        <MapContainer ref={mapRef} />
 
         <ActionButtons>
-          <ActionButton>길찾기</ActionButton>
-          <ActionButton>주소복사</ActionButton>
+          <ActionButton onClick={handleOpenNavigation}>길찾기</ActionButton>
+          <ActionButton onClick={handleCopyAddress}>주소복사</ActionButton>
         </ActionButtons>
 
         <TransportInfo>

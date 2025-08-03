@@ -53,6 +53,9 @@ yarn install
 # 카카오 JavaScript Key (필수)
 VITE_KAKAO_JAVASCRIPT_KEY=your_kakao_javascript_key_here
 
+# 네이버 지도 API 클라이언트 ID (필수)
+VITE_NAVER_MAP_CLIENT_ID=your_naver_map_client_id_here
+
 # 선택사항
 VITE_SITE_URL=http://localhost:5173
 VITE_WEDDING_TITLE=💒 결혼식에 초대합니다
@@ -60,6 +63,15 @@ VITE_WEDDING_DESCRIPTION=소중한 분들과 함께 하고 싶은 저희의 결�
 ```
 
 > 📋 자세한 설정 방법은 [KAKAO_SETUP.md](./KAKAO_SETUP.md) 파일을 참고하세요.
+
+#### 2-4. 네이버 지도 API 설정
+
+네이버 지도 기능을 사용하려면 다음 단계를 따라주세요:
+
+1. [네이버 클라우드 플랫폼](https://www.ncloud.com/)에 가입
+2. **Maps** 서비스 활성화
+3. 애플리케이션 등록 후 클라이언트 ID 발급
+4. `.env` 파일에 `VITE_NAVER_MAP_CLIENT_ID` 설정
 
 ### 3. 개발 서버 실행
 
