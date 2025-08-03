@@ -1,6 +1,7 @@
 import IntroSection from "./components/IntroSection";
 import WeddingInfo from "./components/WeddingInfo";
 import Gallery from "./components/Gallery";
+import Calendar from "./components/Calender";
 import LocationMap from "./components/LocationMap";
 import Account from "./components/Account";
 import RSVP from "./components/RSVP";
@@ -17,6 +18,7 @@ function App() {
       <IntroSection />
       <WeddingInfo />
       <Gallery />
+      <Calendar />
       <LocationMap />
       <Account />
       <RSVP />

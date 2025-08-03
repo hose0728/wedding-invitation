@@ -60,6 +60,13 @@ const PhotoItem = styled.div`
   }
 `;
 
+const PhotoImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+`;
+
 const PhotoPlaceholder = styled.div`
   position: absolute;
   top: 50%;
@@ -140,17 +147,62 @@ const GalleryNote = styled.div`
 function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // 사진 데이터 배열
+  // 사진 데이터 배열 - 실제 이미지 경로 추가
   const photos = [
-    { id: 1, type: "main", title: "Main Photo" },
-    { id: 2, type: "regular", title: "Photo 1" },
-    { id: 3, type: "regular", title: "Photo 2" },
-    { id: 4, type: "large", title: "Featured Photo" },
-    { id: 5, type: "regular", title: "Photo 3" },
-    { id: 6, type: "regular", title: "Photo 4" },
-    { id: 7, type: "regular", title: "Photo 5" },
-    { id: 8, type: "regular", title: "Photo 6" },
-    { id: 9, type: "regular", title: "Photo 7" },
+    {
+      id: 1,
+      type: "main",
+      title: "Main Photo",
+      src: "/photo1.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 2,
+      type: "regular",
+      title: "Photo 1",
+      src: "/photo2.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 3,
+      type: "regular",
+      title: "Photo 2",
+      src: "/photo3.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 4,
+      type: "large",
+      title: "Featured Photo",
+      src: "/photo4.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 5,
+      type: "regular",
+      title: "Photo 3",
+      src: "/photo5.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 6,
+      type: "regular",
+      title: "Photo 4",
+      src: "/photo6.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 7,
+      type: "regular",
+      title: "Photo 5",
+      src: "/photo7.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 8,
+      type: "regular",
+      title: "Photo 6",
+      src: "/photo8.jpg", // 실제 이미지 경로
+    },
+    {
+      id: 9,
+      type: "regular",
+      title: "Photo 7",
+      src: "/photo9.jpg", // 실제 이미지 경로
+    },
   ];
 
   const scrollStep = 340; // 한 번에 스크롤할 픽셀 수 (사진 너비 + 간격)
@@ -185,7 +237,11 @@ function Gallery() {
           <PhotoScroll $translateX={-currentIndex * scrollStep}>
             {photos.map((photo) => (
               <PhotoItem key={photo.id}>
-                <PhotoPlaceholder>{photo.title}</PhotoPlaceholder>
+                {photo.src ? (
+                  <PhotoImage src={photo.src} alt={photo.title} />
+                ) : (
+                  <PhotoPlaceholder>{photo.title}</PhotoPlaceholder>
+                )}
               </PhotoItem>
             ))}
           </PhotoScroll>
