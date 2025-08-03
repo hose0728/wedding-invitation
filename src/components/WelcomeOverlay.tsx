@@ -95,7 +95,7 @@ function WelcomeOverlay() {
   return (
     <Overlay $fade={fade}>
       <WelcomeContent>
-        <WelcomeEmoji>💒</WelcomeEmoji>
+        <WelcomeEmoji>🤵‍♂️ 🌿 👰‍♀️</WelcomeEmoji>
         <WelcomeTitle>결혼식에 초대합니다</WelcomeTitle>
         <WelcomeSubtitle>
           소중한 여러분을 저희의
