@@ -233,27 +233,20 @@ const ShuttleInfo = styled.span`
 // 네이버 지도 타입 정의
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     naver: any;
   }
 }
 
-// 환경변수 타입 정의
-interface ImportMetaEnv {
-  readonly VITE_NAVER_MAP_CLIENT_ID: string;
-  readonly VITE_KAKAO_JAVASCRIPT_KEY: string;
-}
-
-interface ImportMeta {
-  readonly env: ImportMetaEnv;
-}
-
 function LocationMap() {
   const mapRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapInstance = useRef<any>(null);
 
   useEffect(() => {
     // 네이버 지도 API 클라이언트 ID 확인
-    const clientId = import.meta.env.VITE_NAVER_MAP_CLIENT_ID;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const clientId = (import.meta.env as any).VITE_NAVER_MAP_CLIENT_ID;
 
     if (!clientId || clientId === "YOUR_CLIENT_ID") {
       console.warn(
@@ -312,43 +305,48 @@ function LocationMap() {
         };
 
         // 지도 생성
-        mapInstance.current = new window.naver.maps.Map(
-          mapRef.current,
-          mapOptions
-        );
+        if (mapRef.current) {
+          mapInstance.current = new window.naver.maps.Map(
+            mapRef.current,
+            mapOptions
+          );
+        }
 
         // 마커 생성
-        const marker = new window.naver.maps.Marker({
-          position: venueLocation,
-          map: mapInstance.current,
-        });
+        if (mapInstance.current) {
+          const marker = new window.naver.maps.Marker({
+            position: venueLocation,
+            map: mapInstance.current,
+          });
 
-        // 정보창 생성
-        const infoWindow = new window.naver.maps.InfoWindow({
-          content: `
-            <div style="padding: 10px; min-width: 200px;">
-              <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">노블레스웨딩컨벤션</h3>
-              <p style="margin: 0; font-size: 12px; color: #666;">경기도 수원시 팔달구 팔달문로 128</p>
-              <p style="margin: 5px 0 0 0; font-size: 12px; color: #888;">5층 노블레스홀</p>
-            </div>
-          `,
-          maxWidth: 200,
-          backgroundColor: "#fff",
-          borderColor: "#ddd",
-          borderWidth: 1,
-          anchorSize: new window.naver.maps.Size(10, 10),
-          anchorColor: "#fff",
-          pixelOffset: new window.naver.maps.Point(0, -10),
-        });
+          // 정보창 생성
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const infoWindow: any = new window.naver.maps.InfoWindow({
+            content: `
+              <div style="padding: 10px; min-width: 200px;">
+                <h3 style="margin: 0 0 5px 0; font-size: 14px; color: #333;">노블레스웨딩컨벤션</h3>
+                <p style="margin: 0; font-size: 12px; color: #666;">경기도 수원시 팔달구 팔달문로 128</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #888;">5층 노블레스홀</p>
+              </div>
+            `,
+            maxWidth: 200,
+            backgroundColor: "#fff",
+            borderColor: "#ddd",
+            borderWidth: 1,
+            anchorSize: new window.naver.maps.Size(10, 10),
+            anchorColor: "#fff",
+            pixelOffset: new window.naver.maps.Point(0, -10),
+          });
 
-        // 마커 클릭 시 정보창 표시
-        window.naver.maps.Event.addListener(marker, "click", () => {
-          if (infoWindow.getMap()) {
-            infoWindow.close();
-          } else {
-            infoWindow.open(mapInstance.current, marker);
-          }
-        });
+          // 마커 클릭 시 정보창 표시
+          window.naver.maps.Event.addListener(marker, "click", () => {
+            if (infoWindow.getMap()) {
+              infoWindow.close();
+            } else {
+              infoWindow.open(mapInstance.current, marker);
+            }
+          });
+        }
       } catch (error) {
         console.error("네이버 지도 초기화 실패:", error);
       }
