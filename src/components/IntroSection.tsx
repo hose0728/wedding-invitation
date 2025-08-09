@@ -69,72 +69,116 @@ const CouplePhoto = styled.div`
   width: 100%;
   height: 450px;
   background: #f0f0f0;
-  background-image: url("/couple-main.jpg");
+  background-image: url("/mainPhoto.jpeg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-
-  /* 사진이 없을 때 플레이스홀더 */
-  &::before {
-    content: "📸";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 4rem;
-    opacity: 0.3;
-  }
-
-  &::after {
-    content: "커플 사진을 추가해주세요";
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform: translate(-50%, 50%);
-    font-size: 1rem;
-    color: #999;
-    font-family: "Arial", sans-serif;
-  }
 `;
 
-const FloatingPetals = styled.div`
+const SoftBokeh = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   pointer-events: none;
   z-index: 1;
 
-  &::before,
-  &::after {
-    content: "🌸";
+  /* 개별 보케 원 */
+  & > span {
     position: absolute;
-    font-size: 1.5rem;
-    opacity: 0.6;
-    animation: float 6s ease-in-out infinite;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 214, 230, 0.4) 40%,
+      rgba(255, 214, 230, 0.15) 65%,
+      rgba(255, 214, 230, 0) 70%
+    );
+    filter: blur(1px);
+    opacity: 0.45;
+    transform: translateZ(0);
+    animation: drift var(--duration) ease-in-out infinite,
+      twinkle calc(var(--duration) * 0.8) ease-in-out infinite;
+    will-change: transform, opacity;
   }
 
-  &::before {
-    top: 20%;
-    left: 10%;
+  /* 위치, 크기, 타이밍 다양화 */
+  & > span:nth-child(1) {
+    --size: 90px;
+    --duration: 10s;
+    left: 6%;
+    top: 18%;
     animation-delay: 0s;
   }
-
-  &::after {
-    top: 60%;
-    right: 15%;
-    animation-delay: 3s;
+  & > span:nth-child(2) {
+    --size: 70px;
+    --duration: 12s;
+    left: 72%;
+    top: 24%;
+    animation-delay: 1s;
+  }
+  & > span:nth-child(3) {
+    --size: 60px;
+    --duration: 11s;
+    left: 18%;
+    top: 62%;
+    animation-delay: 0.6s;
+  }
+  & > span:nth-child(4) {
+    --size: 100px;
+    --duration: 13s;
+    left: 58%;
+    top: 68%;
+    animation-delay: 1.2s;
+  }
+  & > span:nth-child(5) {
+    --size: 55px;
+    --duration: 9.5s;
+    left: 38%;
+    top: 14%;
+    animation-delay: 0.3s;
+  }
+  & > span:nth-child(6) {
+    --size: 80px;
+    --duration: 12.5s;
+    left: 82%;
+    top: 58%;
+    animation-delay: 0.9s;
+  }
+  & > span:nth-child(7) {
+    --size: 65px;
+    --duration: 10.5s;
+    left: 10%;
+    top: 78%;
+    animation-delay: 1.4s;
+  }
+  & > span:nth-child(8) {
+    --size: 85px;
+    --duration: 14s;
+    left: 68%;
+    top: 8%;
+    animation-delay: 0.2s;
   }
 
-  @keyframes float {
+  @keyframes drift {
     0%,
     100% {
-      transform: translateY(0px) rotate(0deg);
+      transform: translate3d(0, 0, 0) scale(1);
     }
     50% {
-      transform: translateY(-20px) rotate(10deg);
+      transform: translate3d(0, -14px, 0) scale(1.05);
+    }
+  }
+
+  @keyframes twinkle {
+    0%,
+    100% {
+      opacity: 0.35;
+    }
+    50% {
+      opacity: 0.6;
     }
   }
 `;
@@ -211,7 +255,16 @@ const ScrollDot = styled.div`
 function IntroSection() {
   return (
     <IntroContainer>
-      <FloatingPetals />
+      <SoftBokeh aria-hidden>
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </SoftBokeh>
 
       <NamesSection>
         <NameContainer>

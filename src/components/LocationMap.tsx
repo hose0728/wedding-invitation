@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useRef } from "react";
+import Reveal from "./Reveal";
 
 const LocationContainer = styled.div`
   background: #fff;
@@ -409,148 +410,163 @@ function LocationMap() {
   return (
     <LocationContainer>
       <ContentWrapper>
-        <SectionTitle>Location</SectionTitle>
+        <Reveal>
+          <SectionTitle>Location</SectionTitle>
+        </Reveal>
 
-        <VenueInfo>
-          <VenueName>노블레스웨딩컨벤션</VenueName>
-          <VenueAddress>
-            경기도 수원시 팔달구 팔달문로 128
-            <br />
-            5층 노블레스홀
-          </VenueAddress>
-          <VenuePhone>TEL. 031-215-7000</VenuePhone>
-        </VenueInfo>
+        <Reveal>
+          <VenueInfo>
+            <VenueName>노블레스웨딩컨벤션</VenueName>
+            <VenueAddress>
+              경기도 수원시 팔달구 팔달문로 128
+              <br />
+              5층 노블레스홀
+            </VenueAddress>
+            <VenuePhone>TEL. 031-215-7000</VenuePhone>
+          </VenueInfo>
+        </Reveal>
 
-        <MapContainer ref={mapRef} />
+        <Reveal delayMs={120}>
+          <MapContainer ref={mapRef} />
+        </Reveal>
 
-        <ActionButtons>
-          <ActionButton onClick={handleOpenNavigation}>
-            <NaverIcon src="/naverMap.webp" alt="네이버 지도" />
-            네이버 지도
-          </ActionButton>
-          <ActionButton onClick={handleCopyAddress}>
-            <CopyIcon viewBox="0 0 24 24">
-              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-            </CopyIcon>
-            주소복사
-          </ActionButton>
-        </ActionButtons>
+        <Reveal delayMs={180}>
+          <ActionButtons>
+            <ActionButton onClick={handleOpenNavigation}>
+              <NaverIcon src="/naverMap.webp" alt="네이버 지도" />
+              네이버 지도
+            </ActionButton>
+            <ActionButton onClick={handleCopyAddress}>
+              <CopyIcon viewBox="0 0 24 24">
+                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+              </CopyIcon>
+              주소복사
+            </ActionButton>
+          </ActionButtons>
+        </Reveal>
 
         <TransportInfo>
-          <TransportSection>
-            <TransportTitle>🚇 지하철</TransportTitle>
-            <SubwayInfoList>
-              <SubwayInfoCard>
-                <SubwayInfoTitle>🚊 수인분당선</SubwayInfoTitle>
-                <SubwayInfoContent>
-                  <SubwayLine>수원시청역 5번출구</SubwayLine>에서
-                  <br />
-                  <ShuttleInfo>셔틀버스 운행</ShuttleInfo>
-                  <br />
-                  30분 간격으로 운행됩니다
-                </SubwayInfoContent>
-              </SubwayInfoCard>
-            </SubwayInfoList>
-          </TransportSection>
+          <Reveal>
+            <TransportSection>
+              <TransportTitle>🚇 지하철</TransportTitle>
+              <SubwayInfoList>
+                <SubwayInfoCard>
+                  <SubwayInfoTitle>🚊 수인분당선</SubwayInfoTitle>
+                  <SubwayInfoContent>
+                    <SubwayLine>수원시청역 5번출구</SubwayLine>에서
+                    <br />
+                    <ShuttleInfo>셔틀버스 운행</ShuttleInfo>
+                    <br />
+                    30분 간격으로 운행됩니다
+                  </SubwayInfoContent>
+                </SubwayInfoCard>
+              </SubwayInfoList>
+            </TransportSection>
+          </Reveal>
 
-          <TransportSection>
-            <TransportTitle>🚌 버스</TransportTitle>
-            <BusRouteList>
-              <BusRoute>
-                <RouteFrom>🚉 수원역 (4번출구)</RouteFrom>
-                <RouteInfo>
-                  동수원병원 하차:{" "}
-                  <BusNumbers>10, 11-1, 37, 720-2, 83-1</BusNumbers>
-                  <br />
-                  <Duration>약 20분 소요</Duration>
-                </RouteInfo>
-              </BusRoute>
+          <Reveal delayMs={120}>
+            <TransportSection>
+              <TransportTitle>🚌 버스</TransportTitle>
+              <BusRouteList>
+                <BusRoute>
+                  <RouteFrom>🚉 수원역 (4번출구)</RouteFrom>
+                  <RouteInfo>
+                    동수원병원 하차:{" "}
+                    <BusNumbers>10, 11-1, 37, 720-2, 83-1</BusNumbers>
+                    <br />
+                    <Duration>약 20분 소요</Duration>
+                  </RouteInfo>
+                </BusRoute>
 
-              <BusRoute>
-                <RouteFrom>🚌 수원종합버스터미널</RouteFrom>
-                <RouteInfo>
-                  수병원 하차: <BusNumbers>300, 300-1, 80, 82-1, 88</BusNumbers>
-                  <br />
-                  <Duration>약 20분 소요</Duration>
-                </RouteInfo>
-              </BusRoute>
+                <BusRoute>
+                  <RouteFrom>🚌 수원종합버스터미널</RouteFrom>
+                  <RouteInfo>
+                    수병원 하차:{" "}
+                    <BusNumbers>300, 300-1, 80, 82-1, 88</BusNumbers>
+                    <br />
+                    <Duration>약 20분 소요</Duration>
+                  </RouteInfo>
+                </BusRoute>
 
-              <BusRoute>
-                <RouteFrom>🚇 망포역 (4번출구)</RouteFrom>
-                <RouteInfo>
-                  동수원병원 하차: <BusNumbers>61, 62-1</BusNumbers>
-                  <br />
-                  <Duration>약 30분 소요</Duration>
-                </RouteInfo>
-              </BusRoute>
+                <BusRoute>
+                  <RouteFrom>🚇 망포역 (4번출구)</RouteFrom>
+                  <RouteInfo>
+                    동수원병원 하차: <BusNumbers>61, 62-1</BusNumbers>
+                    <br />
+                    <Duration>약 30분 소요</Duration>
+                  </RouteInfo>
+                </BusRoute>
 
-              <BusRoute>
-                <RouteFrom>🌟 서울 주요역</RouteFrom>
-                <RouteInfo>
-                  강남역(7번출구) → 월드컵경기장:{" "}
-                  <BusNumbers>3002, 3007, 3008</BusNumbers>
-                  <br />
-                  사당역(4번출구) → 월드컵경기장:{" "}
-                  <BusNumbers>7000, 7001</BusNumbers>
-                  <br />
-                  <Duration>약 1시간 소요</Duration>
-                </RouteInfo>
-              </BusRoute>
-            </BusRouteList>
-          </TransportSection>
+                <BusRoute>
+                  <RouteFrom>🌟 서울 주요역</RouteFrom>
+                  <RouteInfo>
+                    강남역(7번출구) → 월드컵경기장:{" "}
+                    <BusNumbers>3002, 3007, 3008</BusNumbers>
+                    <br />
+                    사당역(4번출구) → 월드컵경기장:{" "}
+                    <BusNumbers>7000, 7001</BusNumbers>
+                    <br />
+                    <Duration>약 1시간 소요</Duration>
+                  </RouteInfo>
+                </BusRoute>
+              </BusRouteList>
+            </TransportSection>
+          </Reveal>
 
-          <TransportSection>
-            <TransportTitle>🚗 자가용</TransportTitle>
-            <CarInfoList>
-              <CarInfoCard>
-                <CarInfoTitle>🅿️ 주차장 안내</CarInfoTitle>
-                <CarInfoContent>
-                  <HighlightText>본건물</HighlightText>: 지하2F, 지하1F, 1F, 2F,
-                  3F
-                  <br />
-                  <HighlightText>주차타워</HighlightText>: 4층 건물
-                  <br />※ 주차요원의 안내를 받으세요
-                </CarInfoContent>
-              </CarInfoCard>
+          <Reveal delayMs={180}>
+            <TransportSection>
+              <TransportTitle>🚗 자가용</TransportTitle>
+              <CarInfoList>
+                <CarInfoCard>
+                  <CarInfoTitle>🅿️ 주차장 안내</CarInfoTitle>
+                  <CarInfoContent>
+                    <HighlightText>본건물</HighlightText>: 지하2F, 지하1F, 1F,
+                    2F, 3F
+                    <br />
+                    <HighlightText>주차타워</HighlightText>: 4층 건물
+                    <br />※ 주차요원의 안내를 받으세요
+                  </CarInfoContent>
+                </CarInfoCard>
 
-              <CarInfoCard>
-                <CarInfoTitle>📍 내비게이션</CarInfoTitle>
-                <CarInfoContent>
-                  <HighlightText>"수원노블레스웨딩컨벤션"</HighlightText>
-                  <br />
-                  또는
-                  <br />
-                  <HighlightText>
-                    "경기도 수원시 팔달구 우만동 549"
-                  </HighlightText>
-                </CarInfoContent>
-              </CarInfoCard>
+                <CarInfoCard>
+                  <CarInfoTitle>📍 내비게이션</CarInfoTitle>
+                  <CarInfoContent>
+                    <HighlightText>"수원노블레스웨딩컨벤션"</HighlightText>
+                    <br />
+                    또는
+                    <br />
+                    <HighlightText>
+                      "경기도 수원시 팔달구 우만동 549"
+                    </HighlightText>
+                  </CarInfoContent>
+                </CarInfoCard>
 
-              <CarInfoCard>
-                <CarInfoTitle>🛣️ 경부고속도로</CarInfoTitle>
-                <CarInfoContent>
-                  <DirectionStep>신갈 IC 진입</DirectionStep>
-                  <DirectionStep>수원시내방면 직진</DirectionStep>
-                  <DirectionStep>동수원사거리 우회전</DirectionStep>
-                  <DirectionStep>
-                    <HighlightText>100m 우측 도착</HighlightText>
-                  </DirectionStep>
-                </CarInfoContent>
-              </CarInfoCard>
+                <CarInfoCard>
+                  <CarInfoTitle>🛣️ 경부고속도로</CarInfoTitle>
+                  <CarInfoContent>
+                    <DirectionStep>신갈 IC 진입</DirectionStep>
+                    <DirectionStep>수원시내방면 직진</DirectionStep>
+                    <DirectionStep>동수원사거리 우회전</DirectionStep>
+                    <DirectionStep>
+                      <HighlightText>100m 우측 도착</HighlightText>
+                    </DirectionStep>
+                  </CarInfoContent>
+                </CarInfoCard>
 
-              <CarInfoCard>
-                <CarInfoTitle>🛣️ 영동고속도로</CarInfoTitle>
-                <CarInfoContent>
-                  <DirectionStep>동수원 IC 진입</DirectionStep>
-                  <DirectionStep>수원시내방면 직진</DirectionStep>
-                  <DirectionStep>창용문사거리 좌회전</DirectionStep>
-                  <DirectionStep>
-                    <HighlightText>800m 좌측 도착</HighlightText>
-                  </DirectionStep>
-                </CarInfoContent>
-              </CarInfoCard>
-            </CarInfoList>
-          </TransportSection>
+                <CarInfoCard>
+                  <CarInfoTitle>🛣️ 영동고속도로</CarInfoTitle>
+                  <CarInfoContent>
+                    <DirectionStep>동수원 IC 진입</DirectionStep>
+                    <DirectionStep>수원시내방면 직진</DirectionStep>
+                    <DirectionStep>창용문사거리 좌회전</DirectionStep>
+                    <DirectionStep>
+                      <HighlightText>800m 좌측 도착</HighlightText>
+                    </DirectionStep>
+                  </CarInfoContent>
+                </CarInfoCard>
+              </CarInfoList>
+            </TransportSection>
+          </Reveal>
         </TransportInfo>
       </ContentWrapper>
     </LocationContainer>

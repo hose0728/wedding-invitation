@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import Reveal from "./Reveal";
 
 // Kakao SDK 타입 선언
 declare global {
@@ -332,30 +333,36 @@ function ShareSection() {
   return (
     <>
       <ShareContainer>
-        <ShareTitle>청첩장 공유하기</ShareTitle>
-        <ShareSubtitle>소중한 분들과 기쁨을 나누어 주세요</ShareSubtitle>
+        <Reveal>
+          <ShareTitle>청첩장 공유하기</ShareTitle>
+        </Reveal>
+        <Reveal delayMs={80}>
+          <ShareSubtitle>소중한 분들과 기쁨을 나누어 주세요</ShareSubtitle>
+        </Reveal>
 
-        <ShareButtonsContainer>
-          <ShareButton
-            $bgColor="#FEE500"
-            $hoverColor="#E6CE00"
-            onClick={isMobile ? shareToKakao : shareToKakaoPC}
-            disabled={!kakaoReady}
-            style={{ color: "#3A1D1D" }}
-          >
-            <IconWrapper>💬</IconWrapper>
-            카카오톡으로 청첩장 전하기
-          </ShareButton>
+        <Reveal delayMs={140}>
+          <ShareButtonsContainer>
+            <ShareButton
+              $bgColor="#FEE500"
+              $hoverColor="#E6CE00"
+              onClick={isMobile ? shareToKakao : shareToKakaoPC}
+              disabled={!kakaoReady}
+              style={{ color: "#3A1D1D" }}
+            >
+              <IconWrapper>💬</IconWrapper>
+              카카오톡으로 청첩장 전하기
+            </ShareButton>
 
-          <ShareButton
-            $bgColor="#4A90E2"
-            $hoverColor="#357ABD"
-            onClick={copyInvitationLink}
-          >
-            <IconWrapper>🔗</IconWrapper>
-            청첩장 주소 복사하기
-          </ShareButton>
-        </ShareButtonsContainer>
+            <ShareButton
+              $bgColor="#4A90E2"
+              $hoverColor="#357ABD"
+              onClick={copyInvitationLink}
+            >
+              <IconWrapper>🔗</IconWrapper>
+              청첩장 주소 복사하기
+            </ShareButton>
+          </ShareButtonsContainer>
+        </Reveal>
       </ShareContainer>
 
       <CopyNotification $show={showCopyNotification}>

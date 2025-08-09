@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Reveal from "./Reveal";
 
 const FooterContainer = styled.footer`
   background: #fff;
@@ -78,20 +79,30 @@ function Footer() {
   return (
     <FooterContainer>
       <ContentWrapper>
-        <ThankYouMessage>
-          저희의 소중한 날에
-          <br />
-          함께해 주시는 모든 분들께
-          <br />
-          진심으로 감사드립니다
-        </ThankYouMessage>
+        <Reveal>
+          <ThankYouMessage>
+            저희의 소중한 날에
+            <br />
+            함께해 주시는 모든 분들께
+            <br />
+            진심으로 감사드립니다
+          </ThankYouMessage>
+        </Reveal>
 
-        <Divider />
+        <Reveal>
+          <Divider />
+        </Reveal>
 
-        <FloralDecoration>🤵‍♂️ 🌿 👰‍♀️</FloralDecoration>
+        <Reveal delayMs={100}>
+          <FloralDecoration>🤵‍♂️ 🌿 👰‍♀️</FloralDecoration>
+        </Reveal>
 
-        <CoupleNames>주호세 & 임혜빈</CoupleNames>
-        <WeddingDate>2025. 11. 16</WeddingDate>
+        <Reveal delayMs={160}>
+          <CoupleNames>주호세 & 임혜빈</CoupleNames>
+        </Reveal>
+        <Reveal delayMs={220}>
+          <WeddingDate>2025. 11. 16</WeddingDate>
+        </Reveal>
 
         <Copyright>
           Made with<HeartIcon>♥</HeartIcon>Love

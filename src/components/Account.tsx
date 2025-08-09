@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Reveal from "./Reveal";
 
 const AccountContainer = styled.div`
   background: #fff;
@@ -139,86 +140,96 @@ function Account() {
   return (
     <AccountContainer>
       <ContentWrapper>
-        <SectionTitle>Account</SectionTitle>
+        <Reveal>
+          <SectionTitle>Account</SectionTitle>
+        </Reveal>
 
-        <AccountNote>
-          축하의 마음을 전해주시는
-          <br />
-          모든 분들께 감사드립니다.
-        </AccountNote>
+        <Reveal>
+          <AccountNote>
+            축하의 마음을 전해주시는
+            <br />
+            모든 분들께 감사드립니다.
+          </AccountNote>
+        </Reveal>
 
         <AccountGroups>
-          <AccountGroup>
-            <GroupTitle>Groom</GroupTitle>
+          <Reveal>
+            <AccountGroup>
+              <GroupTitle>Groom</GroupTitle>
 
-            <AccountItem>
-              <AccountOwner>신랑 주호세</AccountOwner>
-              <BankInfo>국민은행</BankInfo>
-              <AccountNumber>123456-78-901234</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("12345678901234")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
+              <AccountItem>
+                <AccountOwner>신랑 주호세</AccountOwner>
+                <BankInfo>국민은행</BankInfo>
+                <AccountNumber>123456-78-901234</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("12345678901234")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
 
-            <AccountItem>
-              <AccountOwner>신랑 아버지 주헌백</AccountOwner>
-              <BankInfo>신한은행</BankInfo>
-              <AccountNumber>987654-32-109876</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("98765432109876")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
+              <AccountItem>
+                <AccountOwner>신랑 아버지 주헌백</AccountOwner>
+                <BankInfo>신한은행</BankInfo>
+                <AccountNumber>987654-32-109876</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("98765432109876")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
 
-            <AccountItem>
-              <AccountOwner>신랑 어머니 김화영</AccountOwner>
-              <BankInfo>농협</BankInfo>
-              <AccountNumber>352-1268-7453-73</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("352-1268-7453-73")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
-          </AccountGroup>
+              <AccountItem>
+                <AccountOwner>신랑 어머니 김화영</AccountOwner>
+                <BankInfo>농협</BankInfo>
+                <AccountNumber>352-1268-7453-73</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("352-1268-7453-73")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
+            </AccountGroup>
+          </Reveal>
 
-          <AccountGroup>
-            <GroupTitle>Bride</GroupTitle>
+          <Reveal delayMs={120}>
+            <AccountGroup>
+              <GroupTitle>Bride</GroupTitle>
 
-            <AccountItem>
-              <AccountOwner>신부 임혜빈</AccountOwner>
-              <BankInfo>하나은행</BankInfo>
-              <AccountNumber>111222-33-444555</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("11122233444555")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
+              <AccountItem>
+                <AccountOwner>신부 임혜빈</AccountOwner>
+                <BankInfo>하나은행</BankInfo>
+                <AccountNumber>111222-33-444555</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("11122233444555")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
 
-            <AccountItem>
-              <AccountOwner>신부 아버지 임유순</AccountOwner>
-              <BankInfo>기업은행</BankInfo>
-              <AccountNumber>777888-99-000111</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("77788899000111")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
+              <AccountItem>
+                <AccountOwner>신부 아버지 임유순</AccountOwner>
+                <BankInfo>기업은행</BankInfo>
+                <AccountNumber>777888-99-000111</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("77788899000111")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
 
-            <AccountItem>
-              <AccountOwner>신부 어머니 이제복</AccountOwner>
-              <BankInfo>농협은행</BankInfo>
-              <AccountNumber>333444-55-666777</AccountNumber>
-              <CopyButton onClick={() => copyToClipboard("33344455666777")}>
-                계좌복사
-              </CopyButton>
-            </AccountItem>
-          </AccountGroup>
+              <AccountItem>
+                <AccountOwner>신부 어머니 이제복</AccountOwner>
+                <BankInfo>농협은행</BankInfo>
+                <AccountNumber>333444-55-666777</AccountNumber>
+                <CopyButton onClick={() => copyToClipboard("33344455666777")}>
+                  계좌복사
+                </CopyButton>
+              </AccountItem>
+            </AccountGroup>
+          </Reveal>
         </AccountGroups>
 
-        <ContactInfo>
-          <ContactTitle>문의사항</ContactTitle>
-          <ContactDetails>
-            신랑측: 010-4737-2086 (주호세)
-            <br />
-            신부측: 010-5479-2292 (임혜빈)
-          </ContactDetails>
-        </ContactInfo>
+        <Reveal>
+          <ContactInfo>
+            <ContactTitle>문의사항</ContactTitle>
+            <ContactDetails>
+              신랑측: 010-4737-2086 (주호세)
+              <br />
+              신부측: 010-5479-2292 (임혜빈)
+            </ContactDetails>
+          </ContactInfo>
+        </Reveal>
       </ContentWrapper>
     </AccountContainer>
   );

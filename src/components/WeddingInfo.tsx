@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Reveal from "./Reveal";
 
 const WeddingInfoContainer = styled.div`
   background: #fff;
@@ -86,44 +87,56 @@ function WeddingInfo() {
   return (
     <WeddingInfoContainer>
       <ContentWrapper>
-        <SectionTitle>Wedding Story</SectionTitle>
+        <Reveal>
+          <SectionTitle>Wedding Story</SectionTitle>
+        </Reveal>
 
         <GreetingSection>
-          <GreetingText>
-            서로 다른 길을 걸어온 두 사람이
-            <br />
-            사랑이라는 이름으로 만나
-            <br />
-            이제 함께 걸어가려 합니다.
-          </GreetingText>
+          <Reveal>
+            <GreetingText>
+              서로 다른 길을 걸어온 두 사람이
+              <br />
+              사랑이라는 이름으로 만나
+              <br />
+              이제 함께 걸어가려 합니다.
+            </GreetingText>
+          </Reveal>
 
-          <GreetingText>
-            저희의 새로운 시작을
-            <br />
-            축복해 주시면 감사하겠습니다.
-          </GreetingText>
+          <Reveal delayMs={120}>
+            <GreetingText>
+              저희의 새로운 시작을
+              <br />
+              축복해 주시면 감사하겠습니다.
+            </GreetingText>
+          </Reveal>
         </GreetingSection>
 
-        <Divider />
+        <Reveal>
+          <Divider />
+        </Reveal>
 
         <ParentsInfo>
-          <ParentGroup>
-            <ParentLabel>Groom</ParentLabel>
-            <ParentNames>
-              <ParentName>아버지 주헌백</ParentName>
-              <ParentName>어머니 김화영</ParentName>
-            </ParentNames>
-            <ChildName>장남 주호세</ChildName>
-          </ParentGroup>
+          <Reveal>
+            <ParentGroup>
+              <ParentLabel>Groom</ParentLabel>
+              <ParentNames>
+                <ParentName>아버지 주헌백</ParentName>
+                <ParentName>어머니 김화영</ParentName>
+              </ParentNames>
+              <ChildName>장남 주호세</ChildName>
+            </ParentGroup>
+          </Reveal>
 
-          <ParentGroup>
-            <ParentLabel>Bride</ParentLabel>
-            <ParentNames>
-              <ParentName>아버지 임유순</ParentName>
-              <ParentName>어머니 이제복</ParentName>
-            </ParentNames>
-            <ChildName>장녀 임혜빈</ChildName>
-          </ParentGroup>
+          <Reveal delayMs={120}>
+            <ParentGroup>
+              <ParentLabel>Bride</ParentLabel>
+              <ParentNames>
+                <ParentName>아버지 임유순</ParentName>
+                <ParentName>어머니 이제복</ParentName>
+              </ParentNames>
+              <ChildName>장녀 임혜빈</ChildName>
+            </ParentGroup>
+          </Reveal>
         </ParentsInfo>
       </ContentWrapper>
     </WeddingInfoContainer>

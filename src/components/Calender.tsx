@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Reveal from "./Reveal";
 
 const CalendarContainer = styled.div`
   background: #fff;
@@ -165,50 +166,61 @@ function Calendar() {
   return (
     <CalendarContainer>
       <ContentWrapper>
-        <WeddingDayTitle>WEDDING DAY</WeddingDayTitle>
+        <Reveal>
+          <WeddingDayTitle>WEDDING DAY</WeddingDayTitle>
+        </Reveal>
 
-        <WeddingDate>
-          <KoreanDate>
-            {formatKoreanDate(weddingDate)} | {formatTime()}
-          </KoreanDate>
-          <EnglishDate>
-            {formatEnglishDate(weddingDate)} | {formatEnglishTime()}
-          </EnglishDate>
-        </WeddingDate>
+        <Reveal delayMs={80}>
+          <WeddingDate>
+            <KoreanDate>
+              {formatKoreanDate(weddingDate)} | {formatTime()}
+            </KoreanDate>
+            <EnglishDate>
+              {formatEnglishDate(weddingDate)} | {formatEnglishTime()}
+            </EnglishDate>
+          </WeddingDate>
+        </Reveal>
 
-        <Divider />
+        <Reveal>
+          <Divider />
+        </Reveal>
 
-        <WeekdayHeader>
-          {weekdays.map((day, index) => (
-            <Weekday key={day} $isSunday={index === 0}>
-              {day}
-            </Weekday>
-          ))}
-        </WeekdayHeader>
+        <Reveal delayMs={60}>
+          <WeekdayHeader>
+            {weekdays.map((day, index) => (
+              <Weekday key={day} $isSunday={index === 0}>
+                {day}
+              </Weekday>
+            ))}
+          </WeekdayHeader>
+        </Reveal>
 
-        <CalendarGrid>
-          {calendarDays.map((date, index) => {
-            const isSunday = date.getDay() === 0;
-            const isWeddingDay = date.getTime() === weddingDate.getTime();
-            const isCurrentMonth = date.getMonth() === 10; // 11월
-            const isToday = date.toDateString() === currentDate.toDateString();
+        <Reveal delayMs={120}>
+          <CalendarGrid>
+            {calendarDays.map((date, index) => {
+              const isSunday = date.getDay() === 0;
+              const isWeddingDay = date.getTime() === weddingDate.getTime();
+              const isCurrentMonth = date.getMonth() === 10; // 11월
+              const isToday =
+                date.toDateString() === currentDate.toDateString();
 
-            return (
-              <DayCell
-                key={index}
-                $isSunday={isSunday}
-                $isWeddingDay={isWeddingDay}
-                $isCurrentMonth={isCurrentMonth}
-                $isToday={isToday}
-              >
-                {date.getDate()}
-                {isWeddingDay && (
-                  <WeddingDayLabel>WEDDING DAY!</WeddingDayLabel>
-                )}
-              </DayCell>
-            );
-          })}
-        </CalendarGrid>
+              return (
+                <DayCell
+                  key={index}
+                  $isSunday={isSunday}
+                  $isWeddingDay={isWeddingDay}
+                  $isCurrentMonth={isCurrentMonth}
+                  $isToday={isToday}
+                >
+                  {date.getDate()}
+                  {isWeddingDay && (
+                    <WeddingDayLabel>WEDDING DAY!</WeddingDayLabel>
+                  )}
+                </DayCell>
+              );
+            })}
+          </CalendarGrid>
+        </Reveal>
       </ContentWrapper>
     </CalendarContainer>
   );
