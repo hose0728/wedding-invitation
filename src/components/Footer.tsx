@@ -85,7 +85,7 @@ function Footer() {
             <br />
             함께해 주시는 모든 분들께
             <br />
-            진심으로 감사드립니다
+            진심으로 감사드립니다.
           </ThankYouMessage>
         </Reveal>
 
