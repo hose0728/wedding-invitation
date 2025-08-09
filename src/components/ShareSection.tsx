@@ -337,7 +337,7 @@ function ShareSection() {
           <ShareTitle>청첩장 공유하기</ShareTitle>
         </Reveal>
         <Reveal delayMs={80}>
-          <ShareSubtitle>소중한 분들과 기쁨을 나누어 주세요</ShareSubtitle>
+          <ShareSubtitle>소중한 분들과 기쁨을 나누어 주세요. </ShareSubtitle>
         </Reveal>
 
         <Reveal delayMs={140}>

@@ -457,7 +457,7 @@ function LocationMap() {
                     <br />
                     <ShuttleInfo>셔틀버스 운행</ShuttleInfo>
                     <br />
-                    30분 간격으로 운행됩니다
+                    30분 간격으로 운행됩니다.
                   </SubwayInfoContent>
                 </SubwayInfoCard>
               </SubwayInfoList>
@@ -524,7 +524,7 @@ function LocationMap() {
                     2F, 3F
                     <br />
                     <HighlightText>주차타워</HighlightText>: 4층 건물
-                    <br />※ 주차요원의 안내를 받으세요
+                    <br />※ 주차요원의 안내를 받으세요.
                   </CarInfoContent>
                 </CarInfoCard>
 
