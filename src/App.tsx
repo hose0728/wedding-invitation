@@ -4,7 +4,6 @@ import Gallery from "./components/Gallery";
 import Calendar from "./components/Calender";
 import LocationMap from "./components/LocationMap";
 import Account from "./components/Account";
-import RSVP from "./components/RSVP";
 import ShareSection from "./components/ShareSection";
 import Footer from "./components/Footer";
 import MusicPlayer from "./components/MusicPlayer";
@@ -21,7 +20,6 @@ function App() {
       <Calendar />
       <LocationMap />
       <Account />
-      <RSVP />
       <ShareSection />
       <Footer />
     </div>

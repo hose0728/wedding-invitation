@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const GalleryContainer = styled.div`
   background: #fff;
@@ -26,36 +26,39 @@ const ScrollContainer = styled.div`
   position: relative;
   overflow: hidden;
   margin-bottom: 2rem;
-  padding: 0 20px;
+  padding: 0;
 `;
 
 const PhotoScroll = styled.div<{ $translateX: number }>`
   display: flex;
   transition: transform 0.4s ease;
   transform: translateX(${(props) => props.$translateX}px);
-  gap: 20px;
-  padding: 0 10px;
+  gap: 0;
+  padding: 0;
 `;
 
 const PhotoItem = styled.div`
-  min-width: 320px;
+  min-width: 100%;
   height: 400px;
-  background: #e9ecef;
-  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #adb5bd;
-  font-size: 0.8rem;
-  font-family: "Arial", sans-serif;
+  flex-shrink: 0;
+`;
+
+const PhotoInner = styled.div`
+  width: 90%; /* 사진 카드 가로폭을 줄여서 여백 확보 */
+  height: 100%;
+  margin: 0 auto;
+  background: #e9ecef;
+  border-radius: 12px;
   position: relative;
   overflow: hidden;
-  flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.02);
-    transition: transform 0.3s ease;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
 `;
@@ -146,6 +149,8 @@ const GalleryNote = styled.div`
 
 function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [scrollStep, setScrollStep] = useState(0); // 컨테이너 너비(=사진 한 장)
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   // 사진 데이터 배열 - 실제 이미지 경로 추가
   const photos = [
@@ -205,7 +210,6 @@ function Gallery() {
     },
   ];
 
-  const scrollStep = 340; // 한 번에 스크롤할 픽셀 수 (사진 너비 + 간격)
   const maxIndex = Math.max(0, photos.length - 1);
 
   const handleScroll = (direction: "left" | "right") => {
@@ -220,12 +224,42 @@ function Gallery() {
     setCurrentIndex(index);
   };
 
+  // 컨테이너 너비를 스크롤 스텝으로 사용하여 한 번에 한 장씩 이동
+  useEffect(() => {
+    let resizeTimer: number | null = null;
+
+    const calculateStep = () => {
+      const containerWidth =
+        scrollContainerRef.current?.clientWidth ?? window.innerWidth;
+      const newStep = Math.max(0, Math.round(containerWidth));
+      setScrollStep(newStep);
+
+      const nextMaxIndex = Math.max(0, photos.length - 1);
+      if (currentIndex > nextMaxIndex) {
+        setCurrentIndex(nextMaxIndex);
+      }
+    };
+
+    const onResize = () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(calculateStep, 100);
+    };
+
+    calculateStep();
+    window.addEventListener("resize", onResize);
+    return () => {
+      if (resizeTimer) window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <GalleryContainer>
       <ContentWrapper>
         <SectionTitle>Our Gallery</SectionTitle>
 
-        <ScrollContainer>
+        <ScrollContainer ref={scrollContainerRef}>
           <ScrollButton
             $direction="left"
             onClick={() => handleScroll("left")}
@@ -237,11 +271,13 @@ function Gallery() {
           <PhotoScroll $translateX={-currentIndex * scrollStep}>
             {photos.map((photo) => (
               <PhotoItem key={photo.id}>
-                {photo.src ? (
-                  <PhotoImage src={photo.src} alt={photo.title} />
-                ) : (
-                  <PhotoPlaceholder>{photo.title}</PhotoPlaceholder>
-                )}
+                <PhotoInner>
+                  {photo.src ? (
+                    <PhotoImage src={photo.src} alt={photo.title} />
+                  ) : (
+                    <PhotoPlaceholder>{photo.title}</PhotoPlaceholder>
+                  )}
+                </PhotoInner>
               </PhotoItem>
             ))}
           </PhotoScroll>
@@ -256,7 +292,7 @@ function Gallery() {
         </ScrollContainer>
 
         <ScrollIndicator>
-          {photos.map((_, index) => (
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <Dot
               key={index}
               $active={index === currentIndex}
