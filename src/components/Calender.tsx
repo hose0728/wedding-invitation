@@ -160,7 +160,7 @@ function Calendar() {
   };
 
   const formatEnglishTime = () => {
-    return "PM 2:00";
+    return "PM 1:30";
   };
 
   return (
