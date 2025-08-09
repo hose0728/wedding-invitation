@@ -98,12 +98,12 @@ function WelcomeOverlay() {
         <WelcomeEmoji>🤵‍♂️ 🌿 👰‍♀️</WelcomeEmoji>
         <WelcomeTitle>
           호세와 혜빈이의 <br />
-          결혼식에 초대합니다
+          결혼식에 초대합니다.
         </WelcomeTitle>
         <WelcomeSubtitle>
           소중한 여러분을 저희의
           <br />
-          특별한 날에 초대하고 싶습니다
+          특별한 날에 초대하고 싶습니다.
         </WelcomeSubtitle>
         <LoadingDots>
           <Dot $delay={0} />
