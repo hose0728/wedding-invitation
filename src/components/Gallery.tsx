@@ -39,7 +39,6 @@ const PhotoScroll = styled.div<{ $translateX: number }>`
 
 const PhotoItem = styled.div`
   min-width: 100%;
-  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,8 +46,7 @@ const PhotoItem = styled.div`
 `;
 
 const PhotoInner = styled.div`
-  width: 90%; /* 사진 카드 가로폭을 줄여서 여백 확보 */
-  height: 100%;
+  width: 90%;
   margin: 0 auto;
   background: #e9ecef;
   border-radius: 12px;
@@ -63,7 +61,14 @@ const PhotoInner = styled.div`
   }
 `;
 
+const RatioSpacer = styled.div<{ $ratio: number }>`
+  width: 100%;
+  padding-top: ${(p) => p.$ratio}%;
+`;
+
 const PhotoImage = styled.img`
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -151,6 +156,7 @@ function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [scrollStep, setScrollStep] = useState(0); // 컨테이너 너비(=사진 한 장)
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const [ratioMap, setRatioMap] = useState<Record<number, number>>({});
 
   // 사진 데이터 배열 - 실제 이미지 경로 추가
   const photos = [
@@ -272,8 +278,39 @@ function Gallery() {
             {photos.map((photo) => (
               <PhotoItem key={photo.id}>
                 <PhotoInner>
+                  <RatioSpacer $ratio={ratioMap[photo.id] ?? 133.33} />
                   {photo.src ? (
-                    <PhotoImage src={photo.src} alt={photo.title} />
+                    <PhotoImage
+                      src={photo.src}
+                      alt={photo.title}
+                      onLoad={(e) => {
+                        const img = e.currentTarget as HTMLImageElement;
+                        const w = img.naturalWidth || 1;
+                        const h = img.naturalHeight || 1;
+                        const ratioPercent = (h / w) * 100;
+                        setRatioMap((prev) =>
+                          prev[photo.id] === ratioPercent
+                            ? prev
+                            : { ...prev, [photo.id]: ratioPercent }
+                        );
+                      }}
+                      onError={(e) => {
+                        const img = e.currentTarget as HTMLImageElement;
+                        if (!img.dataset.altTried) {
+                          img.dataset.altTried = "1";
+                          if (img.src.endsWith(".jpg")) {
+                            img.src = img.src.replace(/\.jpg$/i, ".jpeg");
+                          } else if (img.src.endsWith(".jpeg")) {
+                            img.src = img.src.replace(/\.jpeg$/i, ".jpg");
+                          } else {
+                            img.src = "/couple-main.jpg";
+                          }
+                        } else {
+                          img.onerror = null;
+                          img.src = "/couple-main.jpg";
+                        }
+                      }}
+                    />
                   ) : (
                     <PhotoPlaceholder>{photo.title}</PhotoPlaceholder>
                   )}
