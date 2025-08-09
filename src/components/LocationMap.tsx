@@ -158,10 +158,10 @@ const NaverIcon = styled.img`
   object-fit: contain;
 `;
 
-const CopyIcon = styled.svg`
-  width: 16px;
-  height: 16px;
-  fill: #666666;
+const TmapIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
 `;
 
 const CarInfoList = styled.div`
@@ -381,23 +381,35 @@ function LocationMap() {
       });
   }, []);
 
-  const handleCopyAddress = () => {
-    const address = "경기도 수원시 팔달구 팔달문로 128";
-    navigator.clipboard
-      .writeText(address)
-      .then(() => {
-        alert("주소가 복사되었습니다!");
-      })
-      .catch(() => {
-        // 클립보드 API가 지원되지 않는 경우
-        const textArea = document.createElement("textarea");
-        textArea.value = address;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-        alert("주소가 복사되었습니다!");
-      });
+  const handleOpenTMap = () => {
+    const destinationName = encodeURIComponent("수원노블레스웨딩홀");
+    const lon = 127.030336; // goalx (경도)
+    const lat = 37.281503; // goaly (위도)
+
+    const tmapScheme = `tmap://route?goalname=${destinationName}&goalx=${lon}&goaly=${lat}`;
+
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    // 앱으로 여는 시도 후 미설치 시 스토어로 이동
+    if (isAndroid) {
+      window.location.href = tmapScheme;
+      setTimeout(() => {
+        window.location.href =
+          "https://play.google.com/store/apps/details?id=com.skt.tmap.ku";
+      }, 1200);
+    } else if (isIOS) {
+      window.location.href = tmapScheme;
+      setTimeout(() => {
+        window.location.href = "https://apps.apple.com/kr/app/id431589174";
+      }, 1200);
+    } else {
+      // PC 등 기타 환경에서는 네이버 지도로 폴백
+      const fallback = `https://map.naver.com/p/search/${encodeURIComponent(
+        "수원노블레스웨딩컨벤션"
+      )}`;
+      window.open(fallback, "_blank");
+    }
   };
 
   const handleOpenNavigation = () => {
@@ -434,13 +446,11 @@ function LocationMap() {
           <ActionButtons>
             <ActionButton onClick={handleOpenNavigation}>
               <NaverIcon src="/naverMap.webp" alt="네이버 지도" />
-              네이버 지도
+              네이버 지도 열기
             </ActionButton>
-            <ActionButton onClick={handleCopyAddress}>
-              <CopyIcon viewBox="0 0 24 24">
-                <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-              </CopyIcon>
-              주소복사
+            <ActionButton onClick={handleOpenTMap}>
+              <TmapIcon src="/Tmap.png" alt="티맵" />
+              티맵으로 길찾기
             </ActionButton>
           </ActionButtons>
         </Reveal>

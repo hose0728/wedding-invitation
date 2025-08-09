@@ -158,55 +158,55 @@ function Gallery() {
       id: 1,
       type: "main",
       title: "Main Photo",
-      src: "/photo1.jpg", // 실제 이미지 경로
+      src: "/photo1.jpeg", // 실제 이미지 경로
     },
     {
       id: 2,
       type: "regular",
       title: "Photo 1",
-      src: "/photo2.jpg", // 실제 이미지 경로
+      src: "/photo2.jpeg", // 실제 이미지 경로
     },
     {
       id: 3,
       type: "regular",
       title: "Photo 2",
-      src: "/photo3.jpg", // 실제 이미지 경로
+      src: "/photo3.jpeg", // 실제 이미지 경로
     },
     {
       id: 4,
       type: "large",
       title: "Featured Photo",
-      src: "/photo4.jpg", // 실제 이미지 경로
+      src: "/photo4.jpeg", // 실제 이미지 경로
     },
     {
       id: 5,
       type: "regular",
       title: "Photo 3",
-      src: "/photo5.jpg", // 실제 이미지 경로
+      src: "/photo5.jpeg", // 실제 이미지 경로
     },
     {
       id: 6,
       type: "regular",
       title: "Photo 4",
-      src: "/photo6.jpg", // 실제 이미지 경로
+      src: "/photo6.jpeg", // 실제 이미지 경로
     },
     {
       id: 7,
       type: "regular",
       title: "Photo 5",
-      src: "/photo7.jpg", // 실제 이미지 경로
+      src: "/photo7.jpeg", // 실제 이미지 경로
     },
     {
       id: 8,
       type: "regular",
       title: "Photo 6",
-      src: "/photo8.jpg", // 실제 이미지 경로
+      src: "/photo8.jpeg", // 실제 이미지 경로
     },
     {
       id: 9,
       type: "regular",
       title: "Photo 7",
-      src: "/photo9.jpg", // 실제 이미지 경로
+      src: "/photo9.jpeg", // 실제 이미지 경로
     },
   ];
 
